@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   controlBarVisible="{identity.loggedIn}"
+					   preinitialize="Spring.getInstance().initApplication(false)"
+					   creationComplete="init()" 
+					   xmlns:local="*"					   
+					   >
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			
+			import org.granite.tide.BaseContext;
+			import org.granite.tide.Tide;
+			import org.granite.tide.data.DataObserver;
+			import org.granite.tide.events.TideFaultEvent;
+			import org.granite.tide.events.TideResultEvent;
+			import org.granite.tide.service.SimpleServerApp;
+			import org.granite.tide.spring.Identity;
+			import org.granite.tide.spring.Spring;
+			import org.xreport.services.XReportService;
+			
+			
+			[Bindable] [Inject]
+			public var identity:Identity;
+			
+			private function init():void {
+				import flash.net.URLRequestDefaults;
+				
+				URLRequestDefaults.idleTimeout = 120000; //note this value represents milliseconds
+				
+				// Define service endpoint resolver
+				var bc:BaseContext =  Tide.getInstance().getContext();
+				//bc.serviceInitializer = new DefaultServiceInitializer('http://apache:8080/XReport/');
+				
+				var spring:Spring = Spring.getInstance();
+				//spring.initApplication(false);
+				//spring.initApplication();
+				//spring.addComponentWithFactory("serviceInitializer",DefaultServiceInitializer,{ serverName:'apache', serverPort: '8080',contextRoot: "/XReport" });
+				spring.mainServerSession.destination="spring";
+				spring.mainServerSession.serverApp = new SimpleServerApp("/XReport", false, 'apache', '8080');
+				
+				
+				// Check current authentication state
+				identity=null;
+				if (!identity){
+					//Alert.show('identity is null');
+					Tide.getInstance().addComponents([
+						XReportService//+
+					]);
+					removeElementAt(0);
+					var h:Home = new Home();
+					addElement(h);
+					h.init();
+					return;
+				}
+				//Alert.show('start Login');
+				identity.isLoggedIn(autoLogin);
+			}
+			
+			
+			[Observer("org.granite.tide.login")]
+			public function login():void {
+				removeElementAt(0);
+				addElement(new Home());
+			}
+			
+			[Observer("org.granite.tide.logout")]
+			public function logout():void {
+				removeElementAt(0);
+				addElement(new Login());
+			}
+			
+			private function autoLogin(event:TideResultEvent):void {//event:TideFaultEvent):void {
+				//Alert.show('Login');
+				//autologin as user:user
+				if(!identity.loggedIn) identity.login('user', 'user', loginResult, loginFault);
+			}
+			
+			
+			private function loginResult(event:TideResultEvent):void {
+				//do nothig
+				//Alert.show('Loged in');
+			}
+			
+			private function loginFault(event:TideFaultEvent):void {
+				Alert.show('Login failed: '+ event.fault.faultString+';'+event.fault.faultDetail+';'+event.fault.message  );
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:controlBarContent>
+		<s:Label text="Bigzz Отчеты" fontSize="18" fontWeight="bold" width="100%"/>
+		<!--<s:Button label="Logout" click="identity.logout();"/>-->
+	</s:controlBarContent>
+	
+	<local:Login id="loginView" identity="{identity}"/>
+
+</s:WindowedApplication>

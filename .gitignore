@@ -1,0 +1,11 @@
+/bin-java
+/bin-debug
+/html-template
+/libs_off
+*.swf
+*.html
+*.css
+*.js
+*.hid
+/ivy.xml
+/build

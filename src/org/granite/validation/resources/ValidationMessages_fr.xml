@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+      GRANITE DATA SERVICES
+      Copyright (C) 2006-2014 GRANITE DATA SERVICES S.A.S.
+
+      This file is part of the Granite Data Services Platform.
+
+                                  ***
+
+      Community License: GPL 3.0
+
+      This file is free software: you can redistribute it and/or modify
+      it under the terms of the GNU General Public License as published
+      by the Free Software Foundation, either version 3 of the License,
+      or (at your option) any later version.
+
+      This file is distributed in the hope that it will be useful, but
+      WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+      GNU General Public License for more details.
+
+      You should have received a copy of the GNU General Public License
+      along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+                                  ***
+
+      Available Commercial License: GraniteDS SLA 1.0
+
+      This is the appropriate option if you are creating proprietary
+      applications and you are not prepared to distribute and share the
+      source code of your application under the GPL v3 license.
+
+      Please visit http://www.granitedataservices.com/license for more
+      details.
+
+-->
+<properties>
+	<entry key="javax.validation.constraints.NotNull.message">ne peut pas être nul</entry>
+	<entry key="javax.validation.constraints.Size.message">la taille doit être entre {min} et {max}</entry>
+	<entry key="javax.validation.constraints.Pattern.message">doit suivre "{regexp}"</entry>
+	<entry key="javax.validation.constraints.Min.message">doit être plus grand que {value}</entry>
+	<entry key="javax.validation.constraints.Max.message">doit être plus petit que {value}</entry>
+	<entry key="javax.validation.constraints.Null.message">doit être nul</entry>
+	<entry key="javax.validation.constraints.Past.message">doit être dans le passé</entry>
+	<entry key="javax.validation.constraints.Future.message">doit être dans le futur</entry>
+	<entry key="javax.validation.constraints.AssertTrue.message">doit être vrai</entry>
+	<entry key="javax.validation.constraints.AssertFalse.message">doit être faux</entry>
+	<entry key="javax.validation.constraints.Digits.message">Valeur numérique hors limite (&lt;{integer} chiffres&gt;.&lt;{fraction} chiffres&gt; attendus)</entry>
+	<entry key="javax.validation.constraints.DecimalMin.message">doit être plus grand que {value}</entry>
+	<entry key="javax.validation.constraints.DecimalMax.message">doit être plus petit que {value}</entry>
+</properties>
